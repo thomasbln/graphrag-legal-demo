@@ -1,0 +1,118 @@
+# GraphRAG Legal Demo - Cursor Context
+
+## Project Overview
+Building a demo application for Medium article: "Building the Context Layer: How Knowledge Graphs Turn Legal Documents Into Queryable Intelligence"
+
+### Goal
+Demonstrate GraphRAG (Knowledge Graph + AI) superiority over traditional RAG for legal contract queries using real data.
+
+### Target Audience
+1. **Tech Employers/Recruiters** - Show full-stack AI engineering skills
+2. **Legal Professionals (eRecht24 colleagues)** - LegalTech value, not deep tech
+3. **Tech Community** - Practical GraphRAG implementation
+
+## Tech Stack
+
+### Backend
+- **Neo4j** (Aura Free Tier or local): Graph database with CUAD contract data
+  - 415 contracts (SEC EDGAR filings)
+  - 16,998 clauses
+  - 41 clause types
+  - Schema: `(Contract)-[:CONTAINS]->(Clause)-[:OF_TYPE]->(ClauseType)`
+
+- **MCP (Model Context Protocol)**: Bridge layer
+  - MCP Server: `neo4j-cypher` (already configured)
+  - Provides standardized access to Neo4j
+
+- **Claude API** (Anthropic): LLM intelligence
+  - Natural Language → Cypher query generation
+  - Result analysis and insights
+  - Model: `claude-sonnet-4-20250514`
+
+### Frontend
+- **Next.js 14** (App Router)
+- **TypeScript**
+- **Tailwind CSS v4**
+- **React 19**
+
+### Deployment
+- **Vercel** (Frontend)
+- **Neo4j Aura** (Database - may auto-sleep on free tier)
+
+## Data Model (Neo4j)
+
+### Nodes
+```cypher
+// Contract nodes (415 total)
+(:Contract {
+  id: string,           // "contract_0"
+  title: string,        // "ACME Distribution Agreement"
+  num_clauses: integer, // 41
+  context: string       // First ~500 chars of contract
+})
+
+// Clause nodes (16,998 total)
+(:Clause {
+  id: string,              // "clause_123"
+  text: string,            // Actual clause text
+  start_position: integer, // Position in contract
+  is_impossible: boolean   // Whether clause extraction was uncertain
+})
+
+// ClauseType nodes (41 total)
+(:ClauseType {
+  name: string  // "Revenue/Profit Sharing", "Non-Compete", etc.
+})
+```
+
+### Relationships
+```cypher
+(Contract)-[:CONTAINS]->(Clause)
+(Clause)-[:OF_TYPE]->(ClauseType)
+```
+
+### Available Clause Types (41 total)
+Revenue/Profit Sharing, Non-Compete, Audit Rights, Governing Law, Expiration Date, Termination For Convenience, Cap On Liability, Uncapped Liability, License Grant, Anti-Assignment, and 31 more...
+
+## The 5 Killer Queries
+
+### Query 1: Negative Search
+```
+User: "Contracts WITHOUT audit rights"
+RAG: ❌ Can't do negative search
+GraphRAG: ✅ WHERE NOT EXISTS pattern
+```
+
+### Query 2: Multi-Criteria
+```
+User: "Revenue sharing AND non-compete"
+RAG: ❌ Returns either, not both
+GraphRAG: ✅ Multi-hop traversal
+```
+
+### Query 3: Aggregation
+```
+User: "Count by liability type"
+RAG: ❌ Can't aggregate
+GraphRAG: ✅ Native aggregation
+```
+
+### Query 4: Relationship Traversal
+```
+User: "All clauses from expiring contracts"
+RAG: ❌ Loses context
+GraphRAG: ✅ Traverse relationships
+```
+
+### Query 5: Complex Boolean
+```
+User: "(Revenue OR Profit) AND (CA OR NY law)"
+RAG: ❌ Boolean logic fails
+GraphRAG: ✅ Native AND/OR/NOT
+```
+
+## Core Message
+
+**Structure beats similarity for queryable intelligence.**
+
+See full details in `/docs/queries.md` and `README.md`.

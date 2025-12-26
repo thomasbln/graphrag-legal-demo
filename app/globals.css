@@ -1,26 +1,246 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
+  
+  /* GraphRAG - Lebendigeres Cyan mit Gradient */
+  --graphrag-primary: #06b6d4;
+  --graphrag-secondary: #22d3ee;
+  --graphrag-accent: #67e8f9;
+  --graphrag-light: #ecfeff;
+  --graphrag-border: #22d3ee;
+  
+  /* RAG - Warmer Grauton mit Rot-Akzent für "Limitation" */
+  --rag-primary: #64748b;
+  --rag-secondary: #94a3b8;
+  --rag-error: #ef4444;
+  --rag-warning: #f59e0b;
+  --rag-light: #f8fafc;
+  --rag-border: #cbd5e1;
+  
+  /* Neue Akzentfarben */
+  --accent-purple: #a855f7;
+  --accent-pink: #ec4899;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark Mode */
+.dark {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  
+  /* GraphRAG Colors (Dark) */
+  --graphrag-primary: #22d3ee;
+  --graphrag-secondary: #67e8f9;
+  --graphrag-accent: #a5f3fc;
+  --graphrag-light: #164e63;
+  --graphrag-border: #67e8f9;
+  
+  /* RAG Colors (Dark) */
+  --rag-primary: #94a3b8;
+  --rag-secondary: #cbd5e1;
+  --rag-error: #f87171;
+  --rag-warning: #fbbf24;
+  --rag-light: #1e293b;
+  --rag-border: #475569;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Wow Effect: Animated Gradient Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(103, 232, 249, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: gradientShift 20s ease infinite;
+}
+
+html.dark body::before {
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(34, 211, 238, 0.18) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(103, 232, 249, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(165, 243, 252, 0.12) 0%, transparent 50%);
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--graphrag-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2);
+}
+
+/* Button active state (scale animation) */
+button:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:active {
+    transform: none;
+  }
+}
+
+/* Glassmorphism für Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.37),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+}
+
+.dark .glass-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card hover animation with Wow Effect */
+.card-hover {
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms ease-out, border-color 300ms ease-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 
+    0 20px 25px -5px rgba(6, 182, 212, 0.15),
+    0 10px 10px -5px rgba(6, 182, 212, 0.1),
+    0 0 0 1px rgba(6, 182, 212, 0.2);
+  border-color: rgba(6, 182, 212, 0.4);
+}
+
+/* Gradient Borders für GraphRAG Column */
+.graphrag-gradient-border {
+  position: relative;
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(34, 211, 238, 0.1) 100%);
+  border: 2px solid transparent;
+}
+
+.graphrag-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #06b6d4, #22d3ee, #67e8f9);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+/* Pulse Animation für Status Dots */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(6, 182, 212, 0);
+  }
+}
+
+.status-dot-active {
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Loading skeleton animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Fade-in animation for results */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 300ms ease-out;
+}
+
+/* Stagger animation for list items */
+.stagger-item {
+  animation: fadeIn 300ms ease-out;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0ms; }
+.stagger-item:nth-child(2) { animation-delay: 50ms; }
+.stagger-item:nth-child(3) { animation-delay: 100ms; }
+.stagger-item:nth-child(4) { animation-delay: 150ms; }
+.stagger-item:nth-child(5) { animation-delay: 200ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .stagger-item {
+    animation: none;
+  }
 }
