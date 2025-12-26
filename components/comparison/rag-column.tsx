@@ -2,9 +2,13 @@
 
 'use client'
 
-import { EmptyState } from '@/components/results/empty-state'
 import { ContractCard } from '@/components/results/contract-card'
-import { getQueryById } from '@/lib/queries/killer-queries'
+import { RAGStats } from '@/components/results/rag-stats'
+import { RAGWorkflow } from '@/components/results/rag-workflow'
+import { VectorQueryDisplay } from '@/components/results/vector-query-display'
+import { RAGResultExplanation } from '@/components/results/rag-result-explanation'
+import { LimitationCard } from '@/components/results/limitation-card'
+import { Badge } from '@/components/ui/badge'
 
 interface RAGColumnProps {
   queryId?: string
@@ -59,47 +63,81 @@ export function RAGColumn({ queryId, results, isLoading }: RAGColumnProps) {
     )
   }
 
-  const limitation = results.limitation
-  const killerQuery = queryId ? getQueryById(queryId) : undefined
+  const limitation = results?.limitation
+  const ragResults = results?.results || []
+  const count = results?.count || 0
+  const query = results?.query || ''
 
   return (
-      <div className="border-2 border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-6 bg-white dark:bg-slate-900/95 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden group">
-      <h2 className="text-lg font-bold text-slate-950 dark:text-slate-100 mb-6 flex items-center gap-3">
+    <div className="border-2 border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-6 bg-white dark:bg-slate-900/95 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden group">
+      <h2 className="text-lg font-bold text-slate-950 dark:text-slate-100 mb-4 flex items-center gap-3">
         <span className="w-3 h-3 rounded-full bg-slate-400"></span>
         RAG
       </h2>
       
-      {limitation && limitation.canHandle === false ? (
-        <div>
-          <EmptyState limitation={limitation} />
+      {results && (
+        <div className="relative z-10 space-y-6">
+          {/* Stats oben, kompakt - parallel zu GraphRAG */}
+          <RAGStats 
+            stats={{
+              executionTime: results.executionTime,
+              count: count,
+              limitation: limitation,
+            }}
+          />
           
-          {/* NEU: Warum GraphRAG besser ist */}
-          <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-            <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
-              <span>💡</span>
-              <span>Warum GraphRAG das kann:</span>
-            </p>
-            <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1.5 ml-6 list-disc">
-              <li>GraphRAG versteht Beziehungen zwischen Verträgen und Klauseln</li>
-              <li>Kann durch das Netzwerk navigieren: Contract → Clauses → Types</li>
-              <li>Findet nicht nur ähnliche Dokumente, sondern präzise Strukturen</li>
-              <li>Zeigt die tatsächlichen Klauseln, nicht nur Verträge</li>
-            </ul>
-          </div>
+          {/* RAG Workflow - parallel zu WorkflowExplanation */}
+          <RAGWorkflow />
+          
+          {/* Vector Query Display - parallel zu CypherDisplay */}
+          {query && (
+            <VectorQueryDisplay query={query} />
+          )}
+          
+          {/* RAG Results Explanation - parallel zu ResultExplanation */}
+          {queryId && (
+            <RAGResultExplanation 
+              queryId={queryId}
+              count={count}
+              limitation={limitation}
+            />
+          )}
+          
+          {/* RAG Results - parallel zu Contracts/Clauses */}
+          {ragResults.length > 0 && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                  Gefundene Dokumente ({ragResults.length})
+                </h3>
+                <Badge variant="warning" className="text-xs">
+                  Nur ähnliche Dokumente
+                </Badge>
+              </div>
+              <div className="space-y-2">
+                {ragResults.slice(0, 5).map((contract: any, idx: number) => (
+                  <ContractCard 
+                    key={contract.id || idx} 
+                    contract={contract}
+                    matchedClauses={[]} // RAG hat keine Clauses
+                  />
+                ))}
+                {limitation && !limitation.canHandle && (
+                  <div className="p-3 bg-amber-50 dark:bg-amber-950/20 rounded-lg border border-amber-200 dark:border-amber-800/50">
+                    <p className="text-xs text-amber-700 dark:text-amber-300">
+                      ⚠️ Diese Ergebnisse sind unvollständig. RAG kann nicht aggregieren, keine Beziehungen zeigen oder komplexe Abfragen beantworten.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          
+          {/* Limitation Card - parallel zu Analysis */}
+          {limitation && (
+            <LimitationCard limitation={limitation} />
+          )}
         </div>
-      ) : results.results && results.results.length > 0 ? (
-        <div>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-            {limitation?.message || 'Ähnliche Dokumente gefunden, aber Genauigkeit kann nicht garantiert werden.'}
-          </p>
-          <div className="space-y-2">
-            {results.results.slice(0, 3).map((contract: any, idx: number) => (
-              <ContractCard key={contract.id || idx} contract={contract} />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <EmptyState limitation={limitation || { type: 'unknown', message: 'Keine Ergebnisse gefunden', canHandle: false }} />
       )}
     </div>
   )
