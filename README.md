@@ -1,5 +1,11 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## 🌐 Live Demo
+
+**Live Demo:** [https://graphrag-legal-demo.vercel.app/](https://graphrag-legal-demo.vercel.app/)
+
+Try out the 5 killer queries to see GraphRAG in action!
+
 ## Getting Started
 
 ### 1. Install Dependencies
