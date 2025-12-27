@@ -37,7 +37,7 @@ export function AnalysisCard({ analysis }: AnalysisCardProps) {
       </p>
       
       {/* Quick Takeaways - Immer sichtbar */}
-      {(analysis.insights?.length > 0 || analysis.riskFlags?.length > 0 || analysis.recommendations?.length > 0) && (
+      {((analysis.insights?.length ?? 0) > 0 || (analysis.riskFlags?.length ?? 0) > 0 || (analysis.recommendations?.length ?? 0) > 0) && (
         <div className="flex gap-2 flex-wrap mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
           {analysis.insights && analysis.insights.length > 0 && (
             <div className="flex items-center gap-1.5">

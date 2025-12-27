@@ -14,7 +14,7 @@ export async function generateCypher(userQuery: string): Promise<string> {
     prompt: buildCypherPrompt(userQuery),
     temperature: 0.1, // Low temperature for precise queries
     maxTokens: 500,
-  })
+  } as any)
   
   // Clean up response (remove markdown code blocks if present)
   let cypher = text.trim()

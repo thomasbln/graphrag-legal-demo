@@ -54,7 +54,7 @@ Provide analysis in this JSON format:
 }`,
     temperature: 0.3,
     maxTokens: 1200,
-  })
+  } as any)
   
   try {
     // Try to parse JSON response

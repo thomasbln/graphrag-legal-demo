@@ -70,15 +70,16 @@ async function executeWithDriver(
     return result.records.map(record => {
       const obj: Record<string, any> = {}
       record.keys.forEach(key => {
+        const keyStr = String(key) // Ensure key is a string
         const value = record.get(key)
         // Convert Neo4j types to plain JS
         if (neo4j.isInt(value)) {
-          obj[key] = value.toNumber()
+          obj[keyStr] = value.toNumber()
         } else if (value && typeof value === 'object' && 'properties' in value) {
           // Node or Relationship
-          obj[key] = (value as any).properties
+          obj[keyStr] = (value as any).properties
         } else {
-          obj[key] = value
+          obj[keyStr] = value
         }
       })
       return obj
