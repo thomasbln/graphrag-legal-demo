@@ -8,7 +8,55 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 npm install
 ```
 
-### 2. Environment Setup
+### 2. Create Free Accounts
+
+#### Neo4j Aura (Free Tier)
+
+1. **Sign up** at [Neo4j Aura](https://neo4j.com/cloud/aura/) (free tier available)
+2. **Create a free database instance**:
+   - Choose "Free" tier
+   - Select a region (e.g., EU or US)
+   - Wait ~2-3 minutes for database creation
+3. **Get your credentials**:
+   - Copy the connection URI (format: `neo4j+s://xxxxx.databases.neo4j.io`)
+   - Save your username (usually `neo4j`)
+   - Save your password (shown once - save it securely!)
+
+**Note**: Free tier databases auto-pause after inactivity. Wait 30-60 seconds when resuming.
+
+#### Supabase (Free Tier)
+
+1. **Sign up** at [Supabase](https://supabase.com) (free tier available)
+2. **Create a new project**:
+   - Click "New Project"
+   - Choose organization (or create one)
+   - Enter project name (e.g., `graphrag-legal-demo`)
+   - Set database password (save it securely!)
+   - Choose a region close to you
+   - Wait ~2 minutes for project setup
+3. **Get your credentials**:
+   - Go to **Settings** → **API**
+   - Copy `Project URL` (e.g., `https://xxxxx.supabase.co`)
+   - Copy `anon` `public` key (for `NEXT_PUBLIC_SUPABASE_URL`)
+   - Copy `service_role` `secret` key (for `SUPABASE_SERVICE_ROLE_KEY`) - keep this secret!
+
+**Free Tier Limits**:
+- 500 MB database storage
+- 2 GB bandwidth/month
+- More than sufficient for this demo
+
+#### OpenAI API Key
+
+1. **Sign up** at [OpenAI Platform](https://platform.openai.com)
+2. **Add payment method** (required, but usage-based pricing)
+3. **Create API key**:
+   - Go to [API Keys](https://platform.openai.com/api-keys)
+   - Click "Create new secret key"
+   - Save the key immediately (shown only once!)
+
+**Note**: OpenAI API has pay-as-you-go pricing. This demo uses minimal API calls.
+
+### 3. Environment Setup
 
 Copy the example environment file and configure your credentials:
 
@@ -16,12 +64,23 @@ Copy the example environment file and configure your credentials:
 cp .env.example .env.local
 ```
 
-Edit `.env.local` and add your actual credentials:
-- **Supabase**: Get your project URL and keys from [Supabase Dashboard](https://supabase.com/dashboard)
-- **OpenAI**: Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
-- **Neo4j**: Get your connection URI, username, and password from your Neo4j instance (e.g., Neo4j Aura)
+Edit `.env.local` and add your credentials from the accounts you just created:
 
-### 3. Data Setup
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# OpenAI
+OPENAI_API_KEY=sk-proj-xxxxx
+
+# Neo4j Aura
+NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your-password
+```
+
+### 4. Data Setup
 
 This project uses the **CUAD (Contract Understanding Atticus Dataset) v1** for legal contract data.
 
@@ -60,7 +119,7 @@ For the complete CUAD dataset (510 contracts):
 
 **Note**: The sample data included in this repo (5 contracts) is sufficient for testing and demos. Use the full dataset for production or research purposes.
 
-### 4. Run Development Server
+### 5. Run Development Server
 
 ```bash
 npm run dev
@@ -83,6 +142,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Tech Stack
+
+- **Framework**: Next.js 16+ (App Router, React 19)
+- **Language**: TypeScript 5.7+
+- **Styling**: Tailwind CSS v4
+- **Database**: Neo4j Aura (Graph DB)
+- **Vector DB**: Supabase (PostgreSQL + pgvector)
+- **AI**: OpenAI API (GPT-4o for Cypher generation and analysis)
+- **Deployment**: Vercel
 
 ## Learn More
 
