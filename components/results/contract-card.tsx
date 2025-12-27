@@ -34,18 +34,18 @@ export function ContractCard({ contract, matchedClauses }: ContractCardProps) {
           {/* Contract Info - Klarer erklärt */}
           <div className="mt-2 flex flex-wrap gap-1.5">
             <Badge variant="info" className="text-xs">
-              {contract.num_clauses} Klauseln insgesamt
+              {contract.num_clauses} Total clauses
             </Badge>
             {matchedClauses && matchedClauses.length > 0 && (
               <Badge variant="success" className="text-xs">
-                {matchedClauses.length} relevante {matchedClauses.length === 1 ? 'Klausel' : 'Klauseln'} gefunden
+                {matchedClauses.length} relevant {matchedClauses.length === 1 ? 'clause' : 'clauses'} found
               </Badge>
             )}
           </div>
           
           {/* Erklärung warum dieser Contract relevant ist */}
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">
-            Dieser Vertrag erfüllt Ihre Suchkriterien.
+            This contract matches your search criteria.
           </p>
         </div>
         <button
@@ -64,7 +64,7 @@ export function ContractCard({ contract, matchedClauses }: ContractCardProps) {
           {matchedClauses && matchedClauses.length > 0 ? (
             <div>
               <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                Relevante Klauseln:
+                Relevant clauses:
               </p>
               <div className="space-y-2">
                 {matchedClauses.map((item, idx) => (
@@ -82,8 +82,11 @@ export function ContractCard({ contract, matchedClauses }: ContractCardProps) {
           ) : (
             // Info wenn keine Clauses vorhanden
             <div className="p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-              <p className="text-xs text-slate-600 dark:text-slate-400">
-                ℹ️ Diese Query zeigt keine spezifischen Klauseln (z.B. bei negativen Suchen).
+              <p className="flex items-start gap-1.5 text-xs text-slate-600 dark:text-slate-400">
+                <svg className="w-4 h-4 text-slate-600 dark:text-slate-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>This query does not show specific clauses (e.g., for negative searches).</span>
               </p>
             </div>
           )}
@@ -91,10 +94,10 @@ export function ContractCard({ contract, matchedClauses }: ContractCardProps) {
           {/* Vertragskontext - Immer anzeigen */}
           <div>
             <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
-              Vertragskontext:
+              Contract context:
             </p>
             <p className="text-xs text-slate-800 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">
-              {contract.context || 'Kein Kontext verfügbar'}
+              {contract.context || 'No context available'}
             </p>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 'use client'
 
+import { useState } from 'react'
 import { ContractCard } from '@/components/results/contract-card'
 import { RAGStats } from '@/components/results/rag-stats'
 import { RAGWorkflow } from '@/components/results/rag-workflow'
@@ -17,6 +18,8 @@ interface RAGColumnProps {
 }
 
 export function RAGColumn({ queryId, results, isLoading }: RAGColumnProps) {
+  const [expanded, setExpanded] = useState(false) // Default: collapsed
+
   if (isLoading) {
     return (
       <div className="border-2 border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-6 bg-white dark:bg-slate-900/95 backdrop-blur-xl shadow-xl">
@@ -50,93 +53,81 @@ export function RAGColumn({ queryId, results, isLoading }: RAGColumnProps) {
   }
 
   if (!results) {
-    return (
-      <div className="border-2 border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-6 bg-white dark:bg-slate-900/95 backdrop-blur-xl shadow-xl">
-        <h2 className="text-lg font-bold text-slate-950 dark:text-slate-100 mb-6 flex items-center gap-3">
-          <span className="w-3 h-3 rounded-full bg-slate-400"></span>
-          RAG
-        </h2>
-        <p className="text-slate-600 dark:text-slate-400 text-sm">
-          Select a query to see RAG limitations
-        </p>
-      </div>
-    )
+    return null // RAG nicht anzeigen wenn keine Results
   }
 
   const limitation = results?.limitation
   const ragResults = results?.results || []
   const count = results?.count || 0
-  const query = results?.query || ''
 
   return (
-    <div className="border-2 border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-6 bg-white dark:bg-slate-900/95 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden group">
-      <h2 className="text-lg font-bold text-slate-950 dark:text-slate-100 mb-4 flex items-center gap-3">
-        <span className="w-3 h-3 rounded-full bg-slate-400"></span>
-        RAG
-      </h2>
+    <div className="border-2 border-slate-300/50 dark:border-slate-700/50 rounded-2xl overflow-hidden">
+      {/* Collapsible Header */}
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full p-4 bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors flex items-center justify-between group"
+      >
+        <div className="flex items-center gap-3">
+          <span className="w-3 h-3 rounded-full bg-slate-400"></span>
+          <span className="text-lg font-bold text-slate-950 dark:text-slate-100">
+            RAG Limitation
+          </span>
+          {limitation && !limitation.canHandle && (
+            <Badge variant="warning" className="text-xs">
+              Cannot answer this query
+            </Badge>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-slate-500 dark:text-slate-400">
+            {expanded ? 'Show less' : 'Show details'}
+          </span>
+          <span className="text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors text-lg font-light">
+            {expanded ? '−' : '+'}
+          </span>
+        </div>
+      </button>
       
-      {results && (
-        <div className="relative z-10 space-y-6">
-          {/* Stats oben, kompakt - parallel zu GraphRAG */}
-          <RAGStats 
-            stats={{
-              executionTime: results.executionTime,
-              count: count,
-              limitation: limitation,
-            }}
-          />
-          
-          {/* RAG Workflow - parallel zu WorkflowExplanation */}
+      {/* Collapsible Content */}
+      {expanded && (
+        <div className="p-6 bg-white dark:bg-slate-900/95 space-y-6">
+          {/* RAG Workflow - Wie RAG funktioniert */}
           <RAGWorkflow />
           
-          {/* Vector Query Display - parallel zu CypherDisplay */}
-          {query && (
-            <VectorQueryDisplay query={query} />
-          )}
-          
-          {/* RAG Results Explanation - parallel zu ResultExplanation */}
-          {queryId && (
-            <RAGResultExplanation 
-              queryId={queryId}
-              count={count}
-              limitation={limitation}
-            />
-          )}
-          
-          {/* RAG Results - parallel zu Contracts/Clauses */}
-          {ragResults.length > 0 && (
-            <div className="space-y-3">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                  Gefundene Dokumente ({ragResults.length})
-                </h3>
-                <Badge variant="warning" className="text-xs">
-                  Nur ähnliche Dokumente
-                </Badge>
-              </div>
-              <div className="space-y-2">
-                {ragResults.slice(0, 5).map((contract: any, idx: number) => (
-                  <ContractCard 
-                    key={contract.id || idx} 
-                    contract={contract}
-                    matchedClauses={[]} // RAG hat keine Clauses
-                  />
-                ))}
-                {limitation && !limitation.canHandle && (
-                  <div className="p-3 bg-amber-50 dark:bg-amber-950/20 rounded-lg border border-amber-200 dark:border-amber-800/50">
-                    <p className="text-xs text-amber-700 dark:text-amber-300">
-                      ⚠️ Diese Ergebnisse sind unvollständig. RAG kann nicht aggregieren, keine Beziehungen zeigen oder komplexe Abfragen beantworten.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-          
-          {/* Limitation Card - parallel zu Analysis */}
+          {/* Limitation Card prominent */}
           {limitation && (
             <LimitationCard limitation={limitation} />
           )}
+          
+          {/* RAG Stats kompakt */}
+          {count > 0 && (
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                <span className="font-semibold">{count}</span> similar documents found, but incomplete.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+      
+      {/* Compact View (when collapsed) */}
+      {!expanded && limitation && (
+        <div className="p-4 bg-white dark:bg-slate-900/95 border-t border-slate-200 dark:border-slate-700">
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-950/30 flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-red-500 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-red-600 dark:text-red-400 mb-1">
+                {limitation.message}
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                GraphRAG can answer this query, RAG cannot.
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>

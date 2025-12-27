@@ -1,1 +1,0 @@
-./next-themes/README.md

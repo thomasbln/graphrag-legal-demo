@@ -24,10 +24,10 @@ export function QueryStats({ stats }: QueryStatsProps) {
   }
   
   return (
-    <div className="p-4 bg-gradient-to-r from-cyan-50 to-cyan-100/50 dark:from-cyan-950/30 dark:to-cyan-900/20 rounded-xl border border-cyan-200 dark:border-cyan-800/50">
+    <div className="p-4 bg-gradient-to-r from-cyan-50 to-cyan-100/50 dark:from-cyan-950/30 dark:to-cyan-900/20 rounded-xl border border-cyan-200 dark:border-cyan-800/50 min-h-[140px]">
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
-          Suchergebnisse
+          Search Results
         </span>
         {executionTime > 1000 && (
           <Badge variant="warning" className="text-xs">
@@ -44,10 +44,10 @@ export function QueryStats({ stats }: QueryStatsProps) {
               {contractCount}
             </div>
             <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-              {contractCount === 1 ? 'Vertrag gefunden' : 'Verträge gefunden'}
+              {contractCount === 1 ? 'contract found' : 'contracts found'}
             </div>
             <div className="text-xs text-slate-500 dark:text-slate-500 mt-1">
-              Diese erfüllen Ihre Suchkriterien
+              These match your search criteria
             </div>
           </div>
         )}
@@ -56,7 +56,7 @@ export function QueryStats({ stats }: QueryStatsProps) {
         {hasAggregations && (
           <div className="flex-1">
             <Badge variant="success" className="text-xs font-semibold mb-2">
-              Zusammenfassung verfügbar
+              Summary available
             </Badge>
             <div className="space-y-2 mt-2">
               {/* Check if we have structured aggregation rows */}
@@ -92,11 +92,11 @@ export function QueryStats({ stats }: QueryStatsProps) {
                       .join(' ')
                     
                     // Determine label for count
-                    let countLabel = 'Verträge'
+                    let countLabel = 'contracts'
                     if (countKey.includes('clause')) {
-                      countLabel = countValue === 1 ? 'Klausel' : 'Klauseln'
+                      countLabel = countValue === 1 ? 'clause' : 'clauses'
                     } else if (countKey.includes('contract')) {
-                      countLabel = countValue === 1 ? 'Vertrag' : 'Verträge'
+                      countLabel = countValue === 1 ? 'contract' : 'contracts'
                     }
                     
                     return (
@@ -143,7 +143,7 @@ export function QueryStats({ stats }: QueryStatsProps) {
                             {displayCategory}
                           </span>
                           <span className="text-lg font-bold text-cyan-700 dark:text-cyan-400">
-                            {countValue.toLocaleString()} Verträge
+                            {countValue.toLocaleString()} contracts
                           </span>
                         </div>
                       )
@@ -161,7 +161,7 @@ export function QueryStats({ stats }: QueryStatsProps) {
                             {displayCategory}
                           </span>
                           <span className="text-lg font-bold text-cyan-700 dark:text-cyan-400">
-                            {countValue.toLocaleString()} Verträge
+                            {countValue.toLocaleString()} contracts
                           </span>
                         </div>
                       )

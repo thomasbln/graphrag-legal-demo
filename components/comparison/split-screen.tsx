@@ -14,8 +14,11 @@ interface SplitScreenProps {
 
 export function SplitScreen({ queryId, graphragResults, ragResults, isLoading }: SplitScreenProps) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8 animate-fadeIn">
+    <div className="space-y-6 mt-8 animate-fadeIn">
+      {/* GraphRAG Full Width */}
       <GraphRAGColumn queryId={queryId} results={graphragResults} isLoading={isLoading} />
+      
+      {/* RAG Kompakt darunter */}
       <RAGColumn queryId={queryId} results={ragResults} isLoading={isLoading} />
     </div>
   )

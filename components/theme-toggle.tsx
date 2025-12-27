@@ -18,7 +18,7 @@ export function ThemeToggle() {
 
   return (
     <button
-      className="group relative p-3 rounded-xl border-2 border-slate-300 dark:border-slate-600 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="group relative p-3 rounded-xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 backdrop-blur-sm hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       onClick={() => {
         if (mounted) {
           setTheme(isDark ? 'light' : 'dark')
@@ -31,7 +31,7 @@ export function ThemeToggle() {
       {/* SVG Icons statt Emoji */}
       {isDark ? (
         <svg 
-          className="w-5 h-5 text-amber-400 transition-transform duration-300 group-hover:rotate-180" 
+          className="w-5 h-5 text-amber-500 dark:text-amber-400 transition-transform duration-300 group-hover:rotate-180" 
           fill="currentColor" 
           viewBox="0 0 20 20"
         >
@@ -39,7 +39,7 @@ export function ThemeToggle() {
         </svg>
       ) : (
         <svg 
-          className="w-5 h-5 text-slate-600 dark:text-slate-300 transition-transform duration-300 group-hover:rotate-12" 
+          className="w-5 h-5 text-slate-700 dark:text-slate-300 transition-transform duration-300 group-hover:rotate-12" 
           fill="currentColor" 
           viewBox="0 0 20 20"
         >

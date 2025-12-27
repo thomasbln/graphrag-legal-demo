@@ -35,3 +35,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# project-specific
+/docs
+.cursorrules
+AGENTS.md
+CURSOR_START.md
+scripts/export-neo4j.ts
+scripts/export-supabase.ts
