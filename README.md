@@ -119,6 +119,22 @@ For the complete CUAD dataset (510 contracts):
 
 **Note**: The sample data included in this repo (5 contracts) is sufficient for testing and demos. Use the full dataset for production or research purposes.
 
+### 4.5 Cache System (Neo4j Fallback)
+
+The application includes a static JSON cache system for the 5 killer queries. When Neo4j is paused or unavailable (common with free-tier Neo4j Aura), the application automatically falls back to cached query results.
+
+**How It Works**:
+- Cache files are stored in `/data/cache/` directory
+- Each killer query has a corresponding cache file: `query-{queryId}.json`
+- When Neo4j query execution fails, the API automatically loads cached results
+- UI displays a warning badge: "⚠️ Using cached data (Neo4j paused)" when cache is used
+
+**Cache Files**: Cache files contain complete `QueryResponse` objects with query results, AI analysis, Cypher queries, and timestamps. See `/data/cache/README.md` for detailed format documentation.
+
+**Updating Cache**: To update cache files with fresh data, ensure Neo4j is running, execute each killer query via the UI or API, and save the JSON response to `data/cache/query-{queryId}.json` with `cached: true` flag.
+
+The cache ensures the demo works reliably even when the Neo4j free tier auto-pauses after inactivity.
+
 ### 5. Run Development Server
 
 ```bash
@@ -147,7 +163,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 - **Framework**: Next.js 16+ (App Router, React 19)
 - **Language**: TypeScript 5.7+
-- **Styling**: Tailwind CSS v4
+- **Styling**: Tailwind CSS v3
 - **Database**: Neo4j Aura (Graph DB)
 - **Vector DB**: Supabase (PostgreSQL + pgvector)
 - **AI**: OpenAI API (GPT-4o for Cypher generation and analysis)

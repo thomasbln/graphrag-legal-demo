@@ -1,0 +1,141 @@
+{
+  "query": "All clauses from contracts expiring in 2025",
+  "result": {
+    "cypher": "MATCH (c:Contract)-[:CONTAINS]->(exp:Clause)-[:OF_TYPE]->(exp_type:ClauseType) WHERE exp_type.name = 'Expiration Date' AND exp.text =~ '(?i).*2025.*' WITH c, exp.text as expiration_date MATCH (c)-[:CONTAINS]->(cl:Clause)-[:OF_TYPE]->(ct:ClauseType) WHERE ct.name IN ['Renewal Term', 'Notice Period To Terminate Renewal', 'Termination For Convenience', 'Post-Termination Services'] RETURN c.id as c_id, c.title as c_title, c.num_clauses as c_num_clauses, c.context as c_context, expiration_date, cl.id as cl_id, cl.text as cl_text, ct.name as ct_name ORDER BY expiration_date, c.title LIMIT 50",
+    "executionTime": 278,
+    "contracts": [
+      {
+        "id": "contract_25",
+        "title": "BORROWMONEYCOM,INC_06_11_2020-EX-10.1-JOINT VENTURE AGREEMENT",
+        "num_clauses": 41,
+        "context": "Exhibit 10.1\n\nJOINT VENTURE AGREEMENT THIS JOINT VENTURE AGREEMENT (the \"Agreement\") made and entered into this 20th day of Friday, March 2020 (the \"Execution Date\"), BETWEEN: BorrowMoney.com, inc of 512 Bayshore DR, suite 201 Fort Lauderdale FL 33304, and JVLS, LLC dba Vaccines 2Go of 4060 Johns Creek Parkway Suite H Suwanee, GA 30024 (individually the \"Member\" and collectively the \"Members\")."
+      },
+      {
+        "id": "contract_314",
+        "title": "CORALGOLDRESOURCES,LTD_05_28_2020-EX-4.1-CONSULTING AGREEMENT",
+        "num_clauses": 41,
+        "context": "EXHIBIT 4.1 CONSULTING AGREEMENT THIS AGREEMENT is dated for reference the 1st day of February, 2020 (the \"Effective Date\"). BETWEEN: CORAL GOLD RESOURCES LTD., a company duly incorporated pursuant to the laws of the Province of British Columbia and having its head office at Suite 900 - 570 Granville Street, Vancouver, British Columbia V6C 3Pl (the \"Company\") AND: INTERMARK CAPITAL CORP., a company duly incorporated pursuant to the laws of the Province of British Columbia and having an office at Suite 900 - 570 Granville Street, Vancouver, British Columbia V6C 3PI (the \"Consultant\")."
+      }
+    ],
+    "clauses": [
+      {
+        "clause": {
+          "id": "contract_25_clause_5",
+          "text": "",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Renewal Term"
+        },
+        "contract": {
+          "id": "contract_25",
+          "title": "BORROWMONEYCOM,INC_06_11_2020-EX-10.1-JOINT VENTURE AGREEMENT",
+          "num_clauses": 41,
+          "context": "Exhibit 10.1\n\nJOINT VENTURE AGREEMENT THIS JOINT VENTURE AGREEMENT (the \"Agreement\") made and entered into this 20th day of Friday, March 2020 (the \"Execution Date\"), BETWEEN: BorrowMoney.com, inc of 512 Bayshore DR, suite 201 Fort Lauderdale FL 33304, and JVLS, LLC dba Vaccines 2Go of 4060 Johns Creek Parkway Suite H Suwanee, GA 30024 (individually the \"Member\" and collectively the \"Members\")."
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_25_clause_6",
+          "text": "",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Notice Period To Terminate Renewal"
+        },
+        "contract": {
+          "id": "contract_25",
+          "title": "BORROWMONEYCOM,INC_06_11_2020-EX-10.1-JOINT VENTURE AGREEMENT",
+          "num_clauses": 41,
+          "context": "Exhibit 10.1\n\nJOINT VENTURE AGREEMENT THIS JOINT VENTURE AGREEMENT (the \"Agreement\") made and entered into this 20th day of Friday, March 2020 (the \"Execution Date\"), BETWEEN: BorrowMoney.com, inc of 512 Bayshore DR, suite 201 Fort Lauderdale FL 33304, and JVLS, LLC dba Vaccines 2Go of 4060 Johns Creek Parkway Suite H Suwanee, GA 30024 (individually the \"Member\" and collectively the \"Members\")."
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_25_clause_15",
+          "text": "",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Termination For Convenience"
+        },
+        "contract": {
+          "id": "contract_25",
+          "title": "BORROWMONEYCOM,INC_06_11_2020-EX-10.1-JOINT VENTURE AGREEMENT",
+          "num_clauses": 41,
+          "context": "Exhibit 10.1\n\nJOINT VENTURE AGREEMENT THIS JOINT VENTURE AGREEMENT (the \"Agreement\") made and entered into this 20th day of Friday, March 2020 (the \"Execution Date\"), BETWEEN: BorrowMoney.com, inc of 512 Bayshore DR, suite 201 Fort Lauderdale FL 33304, and JVLS, LLC dba Vaccines 2Go of 4060 Johns Creek Parkway Suite H Suwanee, GA 30024 (individually the \"Member\" and collectively the \"Members\")."
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_25_clause_32",
+          "text": "",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Post-Termination Services"
+        },
+        "contract": {
+          "id": "contract_25",
+          "title": "BORROWMONEYCOM,INC_06_11_2020-EX-10.1-JOINT VENTURE AGREEMENT",
+          "num_clauses": 41,
+          "context": "Exhibit 10.1\n\nJOINT VENTURE AGREEMENT THIS JOINT VENTURE AGREEMENT (the \"Agreement\") made and entered into this 20th day of Friday, March 2020 (the \"Execution Date\"), BETWEEN: BorrowMoney.com, inc of 512 Bayshore DR, suite 201 Fort Lauderdale FL 33304, and JVLS, LLC dba Vaccines 2Go of 4060 Johns Creek Parkway Suite H Suwanee, GA 30024 (individually the \"Member\" and collectively the \"Members\")."
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_314_clause_5",
+          "text": "",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Renewal Term"
+        },
+        "contract": {
+          "id": "contract_314",
+          "title": "CORALGOLDRESOURCES,LTD_05_28_2020-EX-4.1-CONSULTING AGREEMENT",
+          "num_clauses": 41,
+          "context": "EXHIBIT 4.1 CONSULTING AGREEMENT THIS AGREEMENT is dated for reference the 1st day of February, 2020 (the \"Effective Date\"). BETWEEN: CORAL GOLD RESOURCES LTD., a company duly incorporated pursuant to the laws of the Province of British Columbia and having its head office at Suite 900 - 570 Granville Street, Vancouver, British Columbia V6C 3Pl (the \"Company\") AND: INTERMARK CAPITAL CORP., a company duly incorporated pursuant to the laws of the Province of British Columbia and having an office at Suite 900 - 570 Granville Street, Vancouver, British Columbia V6C 3PI (the \"Consultant\")."
+        }
+      }
+    ],
+    "aggregations": {},
+    "rawResults": [
+      {
+        "c_id": "contract_25",
+        "c_title": "BORROWMONEYCOM,INC_06_11_2020-EX-10.1-JOINT VENTURE AGREEMENT",
+        "c_num_clauses": 41,
+        "c_context": "Exhibit 10.1\n\nJOINT VENTURE AGREEMENT THIS JOINT VENTURE AGREEMENT (the \"Agreement\") made and entered into this 20th day of Friday, March 2020 (the \"Execution Date\"), BETWEEN: BorrowMoney.com, inc of 512 Bayshore DR, suite 201 Fort Lauderdale FL 33304, and JVLS, LLC dba Vaccines 2Go of 4060 Johns Creek Parkway Suite H Suwanee, GA 30024 (individually the \"Member\" and collectively the \"Members\").",
+        "expiration_date": "The duration of this Venture (the \"Term\") will begin on March 1, 2020 and continue in full force and effect until February 28, 2025 or as otherwise provided in this Agreement.",
+        "cl_id": "contract_25_clause_5",
+        "cl_text": "",
+        "ct_name": "Renewal Term"
+      }
+    ]
+  },
+  "analysis": {
+    "summary": "The query retrieved all relevant renewal and termination clauses from contracts expiring in 2025. This traversal query demonstrates GraphRAG's ability to navigate relationships: first finding contracts with 2025 expiration dates, then retrieving all related renewal and termination clauses from those contracts.",
+    "insights": [
+      "Contracts expiring in 2025 require proactive renewal planning to avoid service disruptions.",
+      "The traversal query successfully navigated from expiration dates to related renewal and termination clauses, showing GraphRAG's relationship-aware querying capability.",
+      "Multiple clause types (Renewal Term, Notice Period, Termination, Post-Termination Services) were retrieved from the same contracts, demonstrating multi-hop relationship traversal."
+    ],
+    "riskFlags": [
+      "Missed renewal deadlines could result in $500K-2M in costs per contract",
+      "Incomplete understanding of renewal terms may lead to service disruptions"
+    ],
+    "recommendations": [
+      "Create a renewal pipeline with deadlines and required actions for each expiring contract.",
+      "Review all termination and post-termination service clauses to ensure smooth transitions.",
+      "Set up automated reminders for notice periods well in advance of expiration dates."
+    ]
+  },
+  "timestamp": "2025-01-27T12:00:00.000Z",
+  "cached": true
+}
+

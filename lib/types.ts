@@ -43,5 +43,6 @@ export interface QueryResponse {
   result: QueryResult
   analysis: Analysis
   timestamp: string
+  cached?: boolean
 }
 

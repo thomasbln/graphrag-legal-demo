@@ -1,0 +1,46 @@
+{
+  "query": "Contracts WITHOUT audit rights",
+  "result": {
+    "cypher": "MATCH (c:Contract) WHERE NOT EXISTS { MATCH (c)-[:CONTAINS]->(:Clause)-[:OF_TYPE]->(ct:ClauseType) WHERE ct.name = 'Audit Rights' } RETURN c.id as id, c.title as title, c.num_clauses as num_clauses, c.context as context LIMIT 50",
+    "executionTime": 187,
+    "contracts": [
+      {
+        "id": "contract_414",
+        "title": "BIOAMBERINC_04_10_2013-EX-10.34-DEVELOPMENT AGREEMENT (1)",
+        "num_clauses": 41,
+        "context": "Exhibit 10.34\n\n*** Text Omitted and Filed Separately  Confidential Treatment Requested Under 17 C.F.R. §§ 200.80(b)(4)  and 203.406\n\nDEVELOPMENT AGREEMENT\n\nThis Development Agreement (\"Development Agreement\") is entered into on April 15 , 2010 (\"EffectiveDate\") by and between Cargill,  Incorporated through its Bio Technology Development Center, having its principal place of business at 15407 McGinty Road West, Wayzata,  Minnesota 55391 USA (\"Cargill\") and Bioamber S.A.S., having a place of business at Route de Bazancourt, F-51110, Pomacle France (\"Bioamber\").  Bioamber and Cargill shall be referred to individually as \"Party\" and collectively as \"Parties\", as required by text.\n\nBackground\n\n\n\n\n\nCargill and Bioamber mutually agree as follows:\n\n\n\n\n\n\n\n   Cargill Confidential   - 1 -   * Confidential treatment requested\n\n  A. Cargill has developed a yeast strain designated CB1 (\"CB1\") for fermenting dextrose and/or mixed sugar streams and related research  tools for modifying CB1,which are p"
+      }
+    ],
+    "clauses": [],
+    "aggregations": {},
+    "rawResults": [
+      {
+        "id": "contract_414",
+        "title": "BIOAMBERINC_04_10_2013-EX-10.34-DEVELOPMENT AGREEMENT (1)",
+        "num_clauses": 41,
+        "context": "Exhibit 10.34\n\n*** Text Omitted and Filed Separately  Confidential Treatment Requested Under 17 C.F.R. §§ 200.80(b)(4)  and 203.406\n\nDEVELOPMENT AGREEMENT\n\nThis Development Agreement (\"Development Agreement\") is entered into on April 15 , 2010 (\"EffectiveDate\") by and between Cargill,  Incorporated through its Bio Technology Development Center, having its principal place of business at 15407 McGinty Road West, Wayzata,  Minnesota 55391 USA (\"Cargill\") and Bioamber S.A.S., having a place of business at Route de Bazancourt, F-51110, Pomacle France (\"Bioamber\").  Bioamber and Cargill shall be referred to individually as \"Party\" and collectively as \"Parties\", as required by text.\n\nBackground\n\n\n\n\n\nCargill and Bioamber mutually agree as follows:\n\n\n\n\n\n\n\n   Cargill Confidential   - 1 -   * Confidential treatment requested\n\n  A. Cargill has developed a yeast strain designated CB1 (\"CB1\") for fermenting dextrose and/or mixed sugar streams and related research  tools for modifying CB1,which are p"
+      }
+    ]
+  },
+  "analysis": {
+    "summary": "The query identified contracts that are missing audit rights clauses. These contracts represent a compliance risk as they lack provisions allowing inspection of vendor books and records.",
+    "insights": [
+      "Contracts without audit rights clauses cannot verify vendor billing accuracy, which is critical for financial oversight.",
+      "Missing audit rights create a significant compliance gap, especially in vendor relationships where billing verification is essential.",
+      "This pattern indicates potential oversight in contract review processes, suggesting a need for standardized clause inclusion checklists."
+    ],
+    "riskFlags": [
+      "High risk: Unable to verify vendor billing accuracy",
+      "Compliance gap: Missing standard audit provisions",
+      "Financial oversight limitation: Cannot inspect vendor records"
+    ],
+    "recommendations": [
+      "Review all identified contracts and negotiate audit rights clauses during next renewal cycle.",
+      "Implement contract template requirements to ensure audit rights are included in all vendor agreements.",
+      "Prioritize high-value vendor contracts for immediate audit rights amendment."
+    ]
+  },
+  "timestamp": "2025-01-27T12:00:00.000Z",
+  "cached": true
+}
+

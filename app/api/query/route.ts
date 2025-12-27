@@ -5,6 +5,7 @@ import { generateCypher } from '@/lib/openai/generate-cypher'
 import { analyzeResults } from '@/lib/openai/analyze-results'
 import { transformResults } from '@/lib/neo4j/queries'
 import { getQueryById } from '@/lib/queries/killer-queries'
+import { loadCachedResult } from '@/lib/cache/loader'
 import type { QueryResponse } from '@/lib/types'
 
 /**
@@ -51,40 +52,59 @@ export async function POST(req: NextRequest) {
     
     const startTime = Date.now()
     
-    // 1. Generate Cypher from natural language
-    const cypher = await generateCypher(query)
-    
-    // 2. Execute on Neo4j via MCP
-    // TODO: In production, configure MCP server connection
-    // For now, this will need to be called via MCP tools in Cursor
-    // or configured with MCP SDK
-    
-    // Placeholder: MCP execution
-    // In Cursor, you can test this by calling MCP tools directly
-    // For runtime, you'll need MCP server configuration
-    
-    const mcpResults = await executeCypherViaMCP(cypher)
-    const executionTime = Date.now() - startTime
-    
-    // 3. Transform results
-    const result = transformResults(cypher, executionTime, mcpResults)
-    
-    // 4. Analyze with OpenAI
-    const analysis = await analyzeResults(query, result)
-    
-    const response: QueryResponse = {
-      query,
-      result,
-      analysis,
-      timestamp: new Date().toISOString(),
+    // Try to execute query on Neo4j, fallback to cache on error
+    try {
+      // 1. Generate Cypher from natural language
+      const cypher = await generateCypher(query)
+      
+      // 2. Execute on Neo4j
+      const mcpResults = await executeCypherViaMCP(cypher)
+      const executionTime = Date.now() - startTime
+      
+      // 3. Transform results
+      const result = transformResults(cypher, executionTime, mcpResults)
+      
+      // 4. Analyze with OpenAI
+      const analysis = await analyzeResults(query, result)
+      
+      const response: QueryResponse = {
+        query,
+        result,
+        analysis,
+        timestamp: new Date().toISOString(),
+        cached: false,
+      }
+      
+      // Add query metadata if available
+      if (queryMetadata) {
+        (response as any).queryMetadata = queryMetadata
+      }
+      
+      return NextResponse.json(response)
+      
+    } catch (error) {
+      // Neo4j error - try to fallback to cache
+      console.warn('Neo4j query failed, attempting cache fallback:', error instanceof Error ? error.message : error)
+      
+      // Only use cache if we have a queryId (not for custom queries)
+      if (queryId) {
+        const cachedResponse = await loadCachedResult(queryId)
+        
+        if (cachedResponse) {
+          console.log(`Using cached result for query: ${queryId}`)
+          
+          // Add query metadata if available
+          if (queryMetadata) {
+            (cachedResponse as any).queryMetadata = queryMetadata
+          }
+          
+          return NextResponse.json(cachedResponse)
+        }
+      }
+      
+      // No cache available - return original error
+      throw error
     }
-    
-    // Add query metadata if available
-    if (queryMetadata) {
-      (response as any).queryMetadata = queryMetadata
-    }
-    
-    return NextResponse.json(response)
     
   } catch (error) {
     console.error('Query error:', error)

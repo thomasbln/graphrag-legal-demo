@@ -1,0 +1,139 @@
+{
+  "query": "Revenue sharing in California OR New York",
+  "result": {
+    "cypher": "MATCH (c:Contract)-[:CONTAINS]->(cl1:Clause)-[:OF_TYPE]->(ct1:ClauseType) WHERE ct1.name = 'Revenue/Profit Sharing' WITH c, cl1, ct1 MATCH (c)-[:CONTAINS]->(cl2:Clause)-[:OF_TYPE]->(ct2:ClauseType) WHERE ct2.name = 'Governing Law' AND (cl2.text =~ '(?i).*California.*' OR cl2.text =~ '(?i).*New York.*') RETURN c.id as c_id, c.title as c_title, c.num_clauses as c_num_clauses, c.context as c_context, cl1.id as cl1_id, cl1.text as cl1_text, ct1.name as revenue_clause_type, cl2.id as cl2_id, cl2.text as cl2_text, ct2.name as governing_law_type, CASE WHEN cl2.text =~ '(?i).*California.*' THEN 'California' WHEN cl2.text =~ '(?i).*New York.*' THEN 'New York' ELSE 'Other' END as jurisdiction ORDER BY jurisdiction, c.title LIMIT 50",
+    "executionTime": 267,
+    "contracts": [
+      {
+        "id": "contract_352",
+        "title": "ADIANUTRITION,INC_04_01_2005-EX-10.D2-RESELLER AGREEMENT",
+        "num_clauses": 41,
+        "context": "Exhibit 10d-2\n\n                               RESELLER AGREEMENT\n\n                                 BY AND BETWEEN\n\n                                PIVX CORPORATION\n\n                                       AND\n\n                               DETTO TECHNOLOGIES\n\nThis Reseller Agreement is entered as of this ___ day of _________, 2004 (\"Effective Date\") by and between PivX Corporation, a California corporation, having its principal place of business at 23 Corporate Plaza Drive, Newport Beach, California, 92661 (\"PivX\") and Detto Technologies, a Washington corporation, having its principal place of business at 14320 NE 21st Street, Suite 11, Bellevue, Washington, 98007 (\"Detto\")."
+      },
+      {
+        "id": "contract_373",
+        "title": "ADUROBIOTECH,INC_06_02_2020-EX-10.7-CONSULTING AGREEMENT",
+        "num_clauses": 41,
+        "context": "Exhibit 10.7\n\nCONSULTING AGREEMENT\n\nAduro Biotech, Inc., with a place of business at 740 Heinz Avenue, Berkeley, CA 94710 (\"Aduro\") and IREYA B.V having an address at Staalwijkstraat 16, 2313 XR Leiden, the Netherlands, represented by Andrea van Elsas, (\"Consultant\") agree to all terms and conditions of this Consulting Agreement (\"Agreement\") dated June 1, 2020, effective as of July 1, 2020 (\"Effective Date\")."
+      },
+      {
+        "id": "contract_161",
+        "title": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT",
+        "num_clauses": 41,
+        "context": "Exhibit 10.28\n\n                              ENDORSEMENT AGREEMENT\n\n            This Endorsement Agreement (\"Agreement\") is made and entered into as of August 24, 1995, by and among the following parties:\n\n                  (a) Kathy Ireland, Inc. (\"KI Inc.\"), furnishing the services       of Kathy Ireland (\"KI\"), c/o The Sterling/Winters Co., 1900 Avenue of the       Stars, Suite #1640, Los Angeles, California 90067;"
+      },
+      {
+        "id": "contract_193",
+        "title": "ASHWORTHINC_01_29_1999-EX-10.(D)-PROMOTION AGREEMENT AND NANTZ COMMUNICATIONS, INC.",
+        "num_clauses": 41,
+        "context": "EXHIBIT 10(d)\n\nPROMOTION AGREEMENT                        ASHWORTH, INC., JAMES W. NANTZ III                          AND NANTZ COMMUNICATIONS, INC.                                               THIS AGREEMENT is entered into by and among ASHWORTH, INC. (The \"Company\" or \"Ashworth\"), JAMES W. NANTZ III (\"Nantz\") and NANTZ COMMUNICATIONS, INC. (\"Nantz Communications\"), effective as of June 1, 1998."
+      }
+    ],
+    "clauses": [
+      {
+        "clause": {
+          "id": "contract_352_clause_19",
+          "text": "",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Revenue/Profit Sharing"
+        },
+        "contract": {
+          "id": "contract_352",
+          "title": "ADIANUTRITION,INC_04_01_2005-EX-10.D2-RESELLER AGREEMENT",
+          "num_clauses": 41,
+          "context": "Exhibit 10d-2\n\n                               RESELLER AGREEMENT\n\n                                 BY AND BETWEEN\n\n                                PIVX CORPORATION\n\n                                       AND\n\n                               DETTO TECHNOLOGIES\n\nThis Reseller Agreement is entered as of this ___ day of _________, 2004 (\"Effective Date\") by and between PivX Corporation, a California corporation, having its principal place of business at 23 Corporate Plaza Drive, Newport Beach, California, 92661 (\"PivX\") and Detto Technologies, a Washington corporation, having its principal place of business at 14320 NE 21st Street, Suite 11, Bellevue, Washington, 98007 (\"Detto\")."
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_352_clause_7",
+          "text": "This Agreement shall be governed by and construed under the laws of the State of California, excluding conflict of laws provisions and excluding the 1980 United Nations Convention on Contracts for the International Sale of Goods.",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Governing Law"
+        },
+        "contract": {
+          "id": "contract_352",
+          "title": "ADIANUTRITION,INC_04_01_2005-EX-10.D2-RESELLER AGREEMENT",
+          "num_clauses": 41,
+          "context": "Exhibit 10d-2\n\n                               RESELLER AGREEMENT\n\n                                 BY AND BETWEEN\n\n                                PIVX CORPORATION\n\n                                       AND\n\n                               DETTO TECHNOLOGIES\n\nThis Reseller Agreement is entered as of this ___ day of _________, 2004 (\"Effective Date\") by and between PivX Corporation, a California corporation, having its principal place of business at 23 Corporate Plaza Drive, Newport Beach, California, 92661 (\"PivX\") and Detto Technologies, a Washington corporation, having its principal place of business at 14320 NE 21st Street, Suite 11, Bellevue, Washington, 98007 (\"Detto\")."
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_161_clause_19",
+          "text": "Diplomat agrees to pay KI, Inc. as royalty a sum equal to  % of the net wholesale volume of the products covered by this Agreement by Diplomat and its affiliated, associated, or subsidiary companies.",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Revenue/Profit Sharing"
+        },
+        "contract": {
+          "id": "contract_161",
+          "title": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT",
+          "num_clauses": 41,
+          "context": "Exhibit 10.28\n\n                              ENDORSEMENT AGREEMENT\n\n            This Endorsement Agreement (\"Agreement\") is made and entered into as of August 24, 1995, by and among the following parties:\n\n                  (a) Kathy Ireland, Inc. (\"KI Inc.\"), furnishing the services       of Kathy Ireland (\"KI\"), c/o The Sterling/Winters Co., 1900 Avenue of the       Stars, Suite #1640, Los Angeles, California 90067;"
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_161_clause_7",
+          "text": "This Agreement shall be governed by and       construed in accordance with the laws of the State of California without       regard to conflict of law principles.",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Governing Law"
+        },
+        "contract": {
+          "id": "contract_161",
+          "title": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT",
+          "num_clauses": 41,
+          "context": "Exhibit 10.28\n\n                              ENDORSEMENT AGREEMENT\n\n            This Endorsement Agreement (\"Agreement\") is made and entered into as of August 24, 1995, by and among the following parties:\n\n                  (a) Kathy Ireland, Inc. (\"KI Inc.\"), furnishing the services       of Kathy Ireland (\"KI\"), c/o The Sterling/Winters Co., 1900 Avenue of the       Stars, Suite #1640, Los Angeles, California 90067;"
+        }
+      }
+    ],
+    "aggregations": {},
+    "rawResults": [
+      {
+        "c_id": "contract_352",
+        "c_title": "ADIANUTRITION,INC_04_01_2005-EX-10.D2-RESELLER AGREEMENT",
+        "c_num_clauses": 41,
+        "c_context": "Exhibit 10d-2\n\n                               RESELLER AGREEMENT\n\n                                 BY AND BETWEEN\n\n                                PIVX CORPORATION\n\n                                       AND\n\n                               DETTO TECHNOLOGIES\n\nThis Reseller Agreement is entered as of this ___ day of _________, 2004 (\"Effective Date\") by and between PivX Corporation, a California corporation, having its principal place of business at 23 Corporate Plaza Drive, Newport Beach, California, 92661 (\"PivX\") and Detto Technologies, a Washington corporation, having its principal place of business at 14320 NE 21st Street, Suite 11, Bellevue, Washington, 98007 (\"Detto\").",
+        "cl1_id": "contract_352_clause_19",
+        "cl1_text": "",
+        "revenue_clause_type": "Revenue/Profit Sharing",
+        "cl2_id": "contract_352_clause_7",
+        "cl2_text": "This Agreement shall be governed by and construed under the laws of the State of California, excluding conflict of laws provisions and excluding the 1980 United Nations Convention on Contracts for the International Sale of Goods.",
+        "governing_law_type": "Governing Law",
+        "jurisdiction": "California"
+      }
+    ]
+  },
+  "analysis": {
+    "summary": "The query successfully identified contracts with revenue sharing clauses that are governed by either California or New York law. This demonstrates GraphRAG's ability to handle complex boolean logic (OR conditions) while maintaining relationship integrity between revenue sharing clauses and governing law clauses.",
+    "insights": [
+      "Revenue sharing agreements in California and New York represent strategic market entries in key US markets.",
+      "The boolean logic query (revenue sharing AND (California OR New York)) successfully navigated multiple relationship types to find matching contracts.",
+      "Contracts with revenue sharing in these jurisdictions provide valuable competitive intelligence for market entry and pricing strategies."
+    ],
+    "riskFlags": [
+      "Market-specific legal requirements may impact revenue sharing structures",
+      "Jurisdiction-specific contract terms may require specialized legal review"
+    ],
+    "recommendations": [
+      "Use these contracts as benchmarks for market-standard revenue sharing terms in California and New York markets.",
+      "Review jurisdiction-specific legal implications before structuring similar revenue sharing agreements.",
+      "Consider these examples when developing pricing strategies for market expansion in these regions."
+    ]
+  },
+  "timestamp": "2025-01-27T12:00:00.000Z",
+  "cached": true
+}
+

@@ -1,0 +1,149 @@
+{
+  "query": "Count contracts by governing law state with clauses",
+  "result": {
+    "cypher": "MATCH (c:Contract)-[:CONTAINS]->(cl:Clause)-[:OF_TYPE]->(ct:ClauseType) WHERE ct.name = 'Governing Law' AND (cl.text =~ '(?i).*California.*' OR cl.text =~ '(?i).*New York.*' OR cl.text =~ '(?i).*Delaware.*') WITH CASE WHEN cl.text =~ '(?i).*California.*' THEN 'California' WHEN cl.text =~ '(?i).*New York.*' THEN 'New York' WHEN cl.text =~ '(?i).*Delaware.*' THEN 'Delaware' ELSE 'Other' END as state, c, cl, ct WITH state, count(DISTINCT c) as contract_count, collect({contract: c, clause: cl, clauseType: ct})[0..10] as sample_data UNWIND sample_data as data RETURN state, contract_count, data.contract.id as c_id, data.contract.title as c_title, data.contract.num_clauses as c_num_clauses, data.contract.context as c_context, data.clause.id as cl_id, data.clause.text as cl_text, data.clauseType.name as ct_name ORDER BY state, contract_count DESC LIMIT 50",
+    "executionTime": 312,
+    "contracts": [
+      {
+        "id": "contract_31",
+        "title": "CORIOINC_07_20_2000-EX-10.5-LICENSE AND HOSTING AGREEMENT",
+        "num_clauses": 41,
+        "context": "1                                                                     EXHIBIT 10.5\n\n                                CORIO INC.                           LICENSE AND HOSTING AGREEMENT\n\n     This License and Hosting Agreement (the \"AGREEMENT\") is made and entered into as of October 29, 1999 (\"EFFECTIVE DATE\") by and between Corio Inc., a Delaware corporation, having its principal place of business at 700 Bay Road, Suite 210, Redwood City, CA 94063 (\"CORIO\") and Commerce One, Inc., a Delaware corporation having its principal place of business at 1600 Rivera Avenue, Walnut Creek, CA 94596 (\"COMMERCE ONE\")."
+      },
+      {
+        "id": "contract_9",
+        "title": "PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT ",
+        "num_clauses": 41,
+        "context": "Exhibit 10.13\n\nConfidential Materials omitted and filed separately with the Securities and Exchange Commission. Asterisks denote omissions.\n\nDATED: OCTOBER 15, 2009\n\nPACIRA PHARMACEUTICALS, INC.\n\nand\n\nEKR THERAPEUTICS, INC."
+      },
+      {
+        "id": "contract_14",
+        "title": "CerenceInc_20191002_8-K_EX-10.4_11827494_EX-10.4_Intellectual Property Agreement",
+        "num_clauses": 41,
+        "context": "Exhibit 10.4\n\nINTELLECTUAL PROPERTY AGREEMENT\n\nby and between\n\nNuance Communications, Inc.\n\nand\n\nCerence Inc.\n\nDated as of September 30, 2019"
+      }
+    ],
+    "clauses": [
+      {
+        "clause": {
+          "id": "contract_31_clause_7",
+          "text": "This Agreement shall be governed by         the laws of the State of California, USA, excluding conflict of laws         provisions and excluding the 1980 United Nations Convention on Contracts         for the International Sale of Goods.",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Governing Law"
+        },
+        "contract": {
+          "id": "contract_31",
+          "title": "CORIOINC_07_20_2000-EX-10.5-LICENSE AND HOSTING AGREEMENT",
+          "num_clauses": 41,
+          "context": "1                                                                     EXHIBIT 10.5\n\n                                CORIO INC.                           LICENSE AND HOSTING AGREEMENT\n\n     This License and Hosting Agreement (the \"AGREEMENT\") is made and entered into as of October 29, 1999 (\"EFFECTIVE DATE\") by and between Corio Inc., a Delaware corporation, having its principal place of business at 700 Bay Road, Suite 210, Redwood City, CA 94063 (\"CORIO\") and Commerce One, Inc., a Delaware corporation having its principal place of business at 1600 Rivera Avenue, Walnut Creek, CA 94596 (\"COMMERCE ONE\")."
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_9_clause_7",
+          "text": "This Agreement and the relationship between the Parties shall be governed by, and interpreted in accordance with New  York law without regard to provisions related to conflicts of laws, and, except as provided in Section 21.2 above, the Parties agree to submit  any dispute to the exclusive jurisdiction of the federal and state courts sitting in New York.",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Governing Law"
+        },
+        "contract": {
+          "id": "contract_9",
+          "title": "PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT ",
+          "num_clauses": 41,
+          "context": "Exhibit 10.13\n\nConfidential Materials omitted and filed separately with the Securities and Exchange Commission. Asterisks denote omissions.\n\nDATED: OCTOBER 15, 2009\n\nPACIRA PHARMACEUTICALS, INC.\n\nand\n\nEKR THERAPEUTICS, INC."
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_14_clause_7",
+          "text": "Any disputes relating to, arising out of or resulting from this Agreement, including to its execution, performance, or enforcement, shall be governed by, and construed in accordance with, the Laws of the State of Delaware, regardless of the Laws that might otherwise govern under applicable principles of conflicts of Laws thereof.",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Governing Law"
+        },
+        "contract": {
+          "id": "contract_14",
+          "title": "CerenceInc_20191002_8-K_EX-10.4_11827494_EX-10.4_Intellectual Property Agreement",
+          "num_clauses": 41,
+          "context": "Exhibit 10.4\n\nINTELLECTUAL PROPERTY AGREEMENT\n\nby and between\n\nNuance Communications, Inc.\n\nand\n\nCerence Inc.\n\nDated as of September 30, 2019"
+        }
+      }
+    ],
+    "aggregations": {
+      "_aggregationRows": [
+        {
+          "state": "California",
+          "contract_count": 46
+        },
+        {
+          "state": "Delaware",
+          "contract_count": 37
+        },
+        {
+          "state": "New York",
+          "contract_count": 78
+        }
+      ]
+    },
+    "rawResults": [
+      {
+        "state": "California",
+        "contract_count": 46,
+        "c_id": "contract_31",
+        "c_title": "CORIOINC_07_20_2000-EX-10.5-LICENSE AND HOSTING AGREEMENT",
+        "c_num_clauses": 41,
+        "c_context": "1                                                                     EXHIBIT 10.5\n\n                                CORIO INC.                           LICENSE AND HOSTING AGREEMENT\n\n     This License and Hosting Agreement (the \"AGREEMENT\") is made and entered into as of October 29, 1999 (\"EFFECTIVE DATE\") by and between Corio Inc., a Delaware corporation, having its principal place of business at 700 Bay Road, Suite 210, Redwood City, CA 94063 (\"CORIO\") and Commerce One, Inc., a Delaware corporation having its principal place of business at 1600 Rivera Avenue, Walnut Creek, CA 94596 (\"COMMERCE ONE\").",
+        "cl_id": "contract_31_clause_7",
+        "cl_text": "This Agreement shall be governed by         the laws of the State of California, USA, excluding conflict of laws         provisions and excluding the 1980 United Nations Convention on Contracts         for the International Sale of Goods.",
+        "ct_name": "Governing Law"
+      },
+      {
+        "state": "New York",
+        "contract_count": 78,
+        "c_id": "contract_9",
+        "c_title": "PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT ",
+        "c_num_clauses": 41,
+        "c_context": "Exhibit 10.13\n\nConfidential Materials omitted and filed separately with the Securities and Exchange Commission. Asterisks denote omissions.\n\nDATED: OCTOBER 15, 2009\n\nPACIRA PHARMACEUTICALS, INC.\n\nand\n\nEKR THERAPEUTICS, INC.",
+        "cl_id": "contract_9_clause_7",
+        "cl_text": "This Agreement and the relationship between the Parties shall be governed by, and interpreted in accordance with New  York law without regard to provisions related to conflicts of laws, and, except as provided in Section 21.2 above, the Parties agree to submit  any dispute to the exclusive jurisdiction of the federal and state courts sitting in New York.",
+        "ct_name": "Governing Law"
+      },
+      {
+        "state": "Delaware",
+        "contract_count": 37,
+        "c_id": "contract_14",
+        "c_title": "CerenceInc_20191002_8-K_EX-10.4_11827494_EX-10.4_Intellectual Property Agreement",
+        "c_num_clauses": 41,
+        "c_context": "Exhibit 10.4\n\nINTELLECTUAL PROPERTY AGREEMENT\n\nby and between\n\nNuance Communications, Inc.\n\nand\n\nCerence Inc.\n\nDated as of September 30, 2019",
+        "cl_id": "contract_14_clause_7",
+        "cl_text": "Any disputes relating to, arising out of or resulting from this Agreement, including to its execution, performance, or enforcement, shall be governed by, and construed in accordance with, the Laws of the State of Delaware, regardless of the Laws that might otherwise govern under applicable principles of conflicts of Laws thereof.",
+        "ct_name": "Governing Law"
+      }
+    ]
+  },
+  "analysis": {
+    "summary": "The query results provide both aggregated counts and detailed contract information for contracts governed by the laws of California, New York, and Delaware. California has 46 contracts, Delaware has 37, and New York has 78. Detailed clauses from specific contracts are also available, showcasing the dual capability of GraphRAG to provide both summary statistics and detailed contract/clause information in a single query.",
+    "insights": [
+      "New York is the most common governing law state among the contracts analyzed, indicating a preference or strategic advantage for businesses operating under New York law.",
+      "The availability of detailed clauses allows for a deeper understanding of specific legal language and potential implications in each jurisdiction.",
+      "GraphRAG's dual capability to provide both aggregated counts and detailed contract/clause information enables comprehensive analysis in a single query, unlike traditional RAG which cannot aggregate or combine summary and detail data."
+    ],
+    "riskFlags": [
+      "High concentration of contracts under New York law may expose businesses to specific legal risks associated with that jurisdiction."
+    ],
+    "recommendations": [
+      "Consider diversifying the governing law clauses to mitigate jurisdiction-specific risks.",
+      "Leverage the detailed clause information to ensure compliance and alignment with business objectives in each jurisdiction."
+    ]
+  },
+  "timestamp": "2025-01-27T12:00:00.000Z",
+  "cached": true
+}
+

@@ -1,0 +1,99 @@
+{
+  "query": "Contracts with revenue sharing AND non-compete",
+  "result": {
+    "cypher": "MATCH (c:Contract)-[:CONTAINS]->(cl1:Clause)-[:OF_TYPE]->(ct1:ClauseType), (c)-[:CONTAINS]->(cl2:Clause)-[:OF_TYPE]->(ct2:ClauseType) WHERE ct1.name = 'Revenue/Profit Sharing' AND ct2.name = 'Non-Compete' RETURN c.id as c_id, c.title as c_title, c.num_clauses as c_num_clauses, c.context as c_context, cl1.text as cl1_text, cl1.id as cl1_id, ct1.name as ct1_name, cl2.text as cl2_text, cl2.id as cl2_id, ct2.name as ct2_name LIMIT 50",
+    "executionTime": 234,
+    "contracts": [
+      {
+        "id": "contract_0",
+        "title": "LIMEENERGYCO_09_09_1999-EX-10-DISTRIBUTOR AGREEMENT",
+        "num_clauses": 41,
+        "context": "EXHIBIT 10.6\n\n                              DISTRIBUTOR AGREEMENT\n\n         THIS  DISTRIBUTOR  AGREEMENT (the  \"Agreement\")  is made by and between Electric City Corp.,  a Delaware  corporation  (\"Company\")  and Electric City of Illinois LLC (\"Distributor\") this 7th day of September, 1999."
+      },
+      {
+        "id": "contract_1",
+        "title": "WHITESMOKE,INC_11_08_2011-EX-10.26-PROMOTION AND DISTRIBUTION AGREEMENT",
+        "num_clauses": 41,
+        "context": "Exhibit 10.26    CONFIDENTIAL TREATMENT HAS BEEN REQUESTED AS TO CERTAIN PORTIONS OF THIS DOCUMENT. EACH SUCH PORTION,  WHICH HAS BEEN OMITTED HEREIN AND REPLACED WITH AN ASTERISK [*], HAS BEEN FILED SEPARATELY WITH THE  SECURITIES AND EXCHANGE COMMISSION.     PROMOTION AND DISTRIBUTION AGREEMENT"
+      },
+      {
+        "id": "contract_2",
+        "title": "LohaCompanyltd_20191209_F-1_EX-10.16_11917878_EX-10.16_Supply Agreement",
+        "num_clauses": 41,
+        "context": "Exhibit 10.16 SUPPLY CONTRACT Contract No: Date: The buyer/End-User: Shenzhen LOHAS Supply Chain Management Co., Ltd."
+      }
+    ],
+    "clauses": [
+      {
+        "clause": {
+          "id": "contract_0_clause_19",
+          "text": "",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Revenue/Profit Sharing"
+        },
+        "contract": {
+          "id": "contract_0",
+          "title": "LIMEENERGYCO_09_09_1999-EX-10-DISTRIBUTOR AGREEMENT",
+          "num_clauses": 41,
+          "context": "EXHIBIT 10.6\n\n                              DISTRIBUTOR AGREEMENT\n\n         THIS  DISTRIBUTOR  AGREEMENT (the  \"Agreement\")  is made by and between Electric City Corp.,  a Delaware  corporation  (\"Company\")  and Electric City of Illinois LLC (\"Distributor\") this 7th day of September, 1999."
+        }
+      },
+      {
+        "clause": {
+          "id": "contract_0_clause_9",
+          "text": "",
+          "start_position": 0,
+          "is_impossible": false
+        },
+        "clauseType": {
+          "name": "Non-Compete"
+        },
+        "contract": {
+          "id": "contract_0",
+          "title": "LIMEENERGYCO_09_09_1999-EX-10-DISTRIBUTOR AGREEMENT",
+          "num_clauses": 41,
+          "context": "EXHIBIT 10.6\n\n                              DISTRIBUTOR AGREEMENT\n\n         THIS  DISTRIBUTOR  AGREEMENT (the  \"Agreement\")  is made by and between Electric City Corp.,  a Delaware  corporation  (\"Company\")  and Electric City of Illinois LLC (\"Distributor\") this 7th day of September, 1999."
+        }
+      }
+    ],
+    "aggregations": {},
+    "rawResults": [
+      {
+        "c_id": "contract_0",
+        "c_title": "LIMEENERGYCO_09_09_1999-EX-10-DISTRIBUTOR AGREEMENT",
+        "c_num_clauses": 41,
+        "c_context": "EXHIBIT 10.6\n\n                              DISTRIBUTOR AGREEMENT\n\n         THIS  DISTRIBUTOR  AGREEMENT (the  \"Agreement\")  is made by and between Electric City Corp.,  a Delaware  corporation  (\"Company\")  and Electric City of Illinois LLC (\"Distributor\") this 7th day of September, 1999.",
+        "cl1_text": "",
+        "cl1_id": "contract_0_clause_19",
+        "ct1_name": "Revenue/Profit Sharing",
+        "cl2_text": "",
+        "cl2_id": "contract_0_clause_9",
+        "ct2_name": "Non-Compete"
+      }
+    ]
+  },
+  "analysis": {
+    "summary": "The query identified contracts that contain both revenue sharing and non-compete clauses. These 'locked-in' partnerships represent high-value relationships with both financial incentives and contractual restrictions.",
+    "insights": [
+      "Contracts with both revenue sharing and non-compete clauses create mutually beneficial partnerships with strong retention mechanisms.",
+      "These dual-clause contracts represent strategic business relationships where both parties have aligned financial and competitive interests.",
+      "The combination of revenue sharing and non-compete provisions indicates mature, well-structured partnership agreements."
+    ],
+    "riskFlags": [
+      "High-value relationships: These contracts represent significant business partnerships",
+      "Retention mechanisms: Non-compete clauses may limit future business flexibility",
+      "Financial dependencies: Revenue sharing creates ongoing financial relationships"
+    ],
+    "recommendations": [
+      "Review these contracts during M&A due diligence to understand partnership lock-in value.",
+      "Assess the impact of non-compete clauses on future business strategy and expansion opportunities.",
+      "Evaluate revenue sharing terms to ensure they remain competitive and aligned with business objectives."
+    ]
+  },
+  "timestamp": "2025-01-27T12:00:00.000Z",
+  "cached": true
+}
+

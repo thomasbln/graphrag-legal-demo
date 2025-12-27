@@ -11,9 +11,10 @@ interface QueryStatsProps {
     aggregations?: Record<string, any>
     rawResults?: any[]
   }
+  cached?: boolean
 }
 
-export function QueryStats({ stats }: QueryStatsProps) {
+export function QueryStats({ stats, cached }: QueryStatsProps) {
   const contractCount = stats.contracts?.length || 0
   const executionTime = stats.executionTime || 0
   const hasAggregations = stats.aggregations && Object.keys(stats.aggregations).length > 0
@@ -29,11 +30,18 @@ export function QueryStats({ stats }: QueryStatsProps) {
         <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
           Search Results
         </span>
-        {executionTime > 1000 && (
-          <Badge variant="warning" className="text-xs">
-            {(executionTime / 1000).toFixed(1)}s
-          </Badge>
-        )}
+        <div className="flex items-center gap-2">
+          {cached && (
+            <Badge variant="warning" className="text-xs">
+              ⚠️ Using cached data (Neo4j paused)
+            </Badge>
+          )}
+          {executionTime > 1000 && (
+            <Badge variant="warning" className="text-xs">
+              {(executionTime / 1000).toFixed(1)}s
+            </Badge>
+          )}
+        </div>
       </div>
       
       <div className="flex flex-wrap items-baseline gap-4">

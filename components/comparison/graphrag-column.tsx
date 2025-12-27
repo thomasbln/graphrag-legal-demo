@@ -131,7 +131,7 @@ export function GraphRAGColumn({
           <>
             {/* Stats oben, kompakt */}
             <div>
-              <QueryStats stats={results.result} />
+              <QueryStats stats={results.result} cached={results.cached} />
             </div>
 
             {/* How GraphRAG Works - NEU */}
