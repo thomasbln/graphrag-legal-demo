@@ -90,4 +90,4 @@ MIT
 
 ---
 
-_crafted by thomas @ awareo.io_
+crafted by [thomas](https://medium.com/@thomasbln) @ [awareo.io](https://awareo.io)
