@@ -4,6 +4,29 @@ This repository contains a demonstration of GraphRAG (Graph Retrieval-Augmented 
 
 [Article on Medium](https://medium.com/p/01436abfe095) · [Live Demo](https://graphrag-legal-demo-private.vercel.app/)
 
+## Demo
+
+The demo turns a natural-language question into a Cypher query and runs it against the graph.
+
+*Question:* "Contracts with both Revenue Sharing and Non-Compete clauses?"
+
+*Generated Cypher:*
+
+```cypher
+MATCH (c:Contract)-[:CONTAINS]->(cl1:Clause)-[:OF_TYPE]->(ct1:ClauseType)
+WHERE ct1.name = 'Revenue/Profit Sharing'
+WITH c, cl1, ct1
+MATCH (c)-[:CONTAINS]->(cl2:Clause)-[:OF_TYPE]->(ct2:ClauseType)
+WHERE ct2.name = 'Non-Compete'
+RETURN
+  c.id, c.title, c.num_clauses, c.context,
+  cl1.id, cl1.text, ct1.name AS revenue_clause_type,
+  cl2.id, cl2.text, ct2.name AS non_compete_clause_type
+LIMIT 50
+```
+
+![GraphRAG vs RAG demo](images/demo-graphrag-vs-rag.png)
+
 ## The Problem: Semantic Similarity vs. Logical Precision
 
 Most RAG applications rely on vector embeddings to find "similar" text. While effective for summaries, this approach fails on structured or negative queries:
@@ -67,4 +90,4 @@ MIT
 
 ---
 
-*crafted by thomas @ awareo.io*
+_crafted by thomas @ awareo.io_
